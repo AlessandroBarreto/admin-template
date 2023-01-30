@@ -1,5 +1,6 @@
 import { useState } from "react";
 import AuthInput from "../components/auth/AuthInput";
+import useAuth from "../hooks/useAuth";
 import { Google, Warning } from "../icons";
 
 type AutenticationMode = "login" | "signup";
@@ -9,6 +10,8 @@ export default function autentication() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
+
+  const { user, loginGoogle } = useAuth();
 
   const submit = () => {
     if (mode == "login") {
@@ -71,7 +74,7 @@ export default function autentication() {
         <hr className="my-6 border-gray-300 w-full" />
         <button
           className="flex justify-center items-center w-full bg-red-500 hover:bg-red-400 text-white rounded-lg px-4 py-3 "
-          onClick={submit}
+          onClick={loginGoogle}
         >
           <span>Login with Google</span>
           <div className="flex justify-center items-center ml-2 w-7 h-7 bg-white rounded-full">
