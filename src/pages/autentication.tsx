@@ -1,11 +1,12 @@
 import { useState } from "react";
+import Image from "next/image";
 import AuthInput from "../components/auth/AuthInput";
 import useAuth from "../hooks/useAuth";
 import { Google, Warning } from "../icons";
 
 type AutenticationMode = "login" | "signup";
 
-export default function autentication() {
+export default function Autentication() {
   const [mode, setMode] = useState<AutenticationMode>("login");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
