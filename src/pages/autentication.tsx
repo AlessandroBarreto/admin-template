@@ -11,15 +11,17 @@ export default function autentication() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
 
-  const { user, loginGoogle } = useAuth();
+  const { login, register, loginGoogle } = useAuth();
 
-  const submit = () => {
-    if (mode == "login") {
-      console.log("login");
-      showError("login error");
-    } else {
-      console.log("signup");
-      showError("signup error");
+  const submit = async () => {
+    try {
+      if (mode == "login") {
+        await login(email, password);
+      } else {
+        await register(email, password);
+      }
+    } catch (e) {
+      showError(e?.message ?? "something went wrong!");
     }
   };
 

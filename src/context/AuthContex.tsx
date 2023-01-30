@@ -8,6 +8,8 @@ interface AuthContextProps {
   user?: User;
   loading?: boolean;
   loginGoogle?: () => Promise<void>;
+  login?: (email: string, password: string) => Promise<void>;
+  register?: (email: string, password: string) => Promise<void>;
   logout?: () => Promise<void>;
 }
 
@@ -59,12 +61,39 @@ export function AuthProvider(props) {
         .auth()
         .signInWithPopup(new firebase.auth.GoogleAuthProvider());
 
-      sessionConfig(response.user);
+      await sessionConfig(response.user);
       Router.push("/");
     } finally {
       setLoading(false);
     }
   };
+
+  const login = async (email: string, password: string) => {
+    try {
+      setLoading(true);
+      const response = await firebase
+        .auth()
+        .signInWithEmailAndPassword(email, password);
+      await sessionConfig(response.user);
+      Router.push("/");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const register = async (email: string, password: string) => {
+    try {
+      setLoading(true);
+      const response = await firebase
+        .auth()
+        .createUserWithEmailAndPassword(email, password);
+      await sessionConfig(response.user);
+      Router.push("/");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const logout = async () => {
     try {
       setLoading(true);
@@ -85,7 +114,9 @@ export function AuthProvider(props) {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ user, loading, loginGoogle, logout }}>
+    <AuthContext.Provider
+      value={{ user, loading, loginGoogle, login, register, logout }}
+    >
       {props.children}
     </AuthContext.Provider>
   );
