@@ -40,7 +40,7 @@ export default function Autentication() {
     <div className="flex h-screen items-center justify-center ">
       <div className="hidden md:block w-1/2 lg:w-2/3">
         <img
-          src="https://source.unsplash.com/random"
+          src="https://picsum.photos/1920/1080"
           alt="random image"
           className="h-screen w-full object-cover "
         />
